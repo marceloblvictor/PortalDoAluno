@@ -8,7 +8,16 @@ namespace PortalDoAluno.Data
     /// </summary>
     public class PortalDoAlunoDbContext : DbContext
     {
+        /// <summary>
+        /// Construtor do contexto do Entity Framework da aplicação
+        /// Passa as opções de configurações para o Construtor de DbContext
+        /// </summary>
+        /// <param name="options">Opções de configurações do DbContext</param>
+        public PortalDoAlunoDbContext(DbContextOptions<PortalDoAlunoDbContext> options) : base(options) { }
 
+        /// <summary>
+        /// Manipula as instâncias do modelo Student
+        /// </summary>
         public DbSet<Student> Students { get; set; }
         
     }
