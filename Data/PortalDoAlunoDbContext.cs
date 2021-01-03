@@ -6,7 +6,7 @@ namespace PortalDoAluno.Data
     /// <summary>
     /// Contexto da sessão do Entity Framework com o Banco de Dados da aplicação Portal do Aluno
     /// </summary>
-    public class PortalDoAlunoDbContext : DbContext
+    sealed public class PortalDoAlunoDbContext : DbContext
     {
         /// <summary>
         /// Construtor do contexto do Entity Framework da aplicação

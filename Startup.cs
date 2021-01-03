@@ -20,7 +20,7 @@ namespace PortalDoAluno
             // Adiciona o Context do Entity Framework como uma dependência da aplicação
             // Obtém a connection string de appsettings.json
             services.AddDbContext<PortalDoAlunoDbContext>(
-                    options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection:PortalDoAlunoDb")
+                    options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection")
                 );
         }
 
