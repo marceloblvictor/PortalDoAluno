@@ -14,8 +14,8 @@ namespace PortalDoAluno
         // Container de injeção de dependências
         public void ConfigureServices(IServiceCollection services)
         {
-            // Adiciona os controllers do MVC como uma dependência da aplicação
-            services.AddControllers();
+            // Adiciona os controllers (com views) do MVC como uma dependência da aplicação
+            services.AddControllersWithViews();
 
             // Adiciona o Context do Entity Framework como uma dependência da aplicação
             // Obtém a connection string de appsettings.json
@@ -36,10 +36,8 @@ namespace PortalDoAluno
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapDefaultControllerRoute();
+
             });
         }
     }

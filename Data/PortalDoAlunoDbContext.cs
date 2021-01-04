@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PortalDoAluno.Model;
+using PortalDoAluno.Models;
 
 namespace PortalDoAluno.Data
 {
