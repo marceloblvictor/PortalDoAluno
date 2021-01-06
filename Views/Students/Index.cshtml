@@ -1,4 +1,29 @@
-﻿@{
-}
+﻿<div id="students-list-container" class="container-fluid bg-dark text-white">
+    <h2>Lista de Alunos:</h2>
+    
+    <table id="students-table">
+        <tr>
+            <th>Nome</th>
+            <th>Média Global</th>
+            <th>Matrícula</th>
+        </tr>
 
-<h2>Lista de Alunos:</h2>
+        @*
+            TODO: implementar foreach para exibir a lista inteira de registros de alunos
+
+        @foreach (var student in Model.Student)
+        {
+            <tr>
+                <td>Jill</td>
+                <td>Smith</td>
+                <td>50</td>
+            </tr>
+         }
+
+        *@
+
+
+    </table>
+</div>
+
+<img class="img-fluid" src="~/img/test.png" alt="teste" />

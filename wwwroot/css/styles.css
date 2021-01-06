@@ -1,0 +1,13 @@
+﻿body {
+    background-color: #a5cce9;
+    height: 800px;
+}
+
+#students-list-container {
+    height: 100vh;
+}
+
+#students-table {
+    width: 600px;
+    margin: auto;
+}
