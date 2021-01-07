@@ -1,29 +1,70 @@
-﻿<div id="students-list-container" class="container-fluid bg-dark text-white">
-    <h2>Lista de Alunos:</h2>
+﻿@{
+    ViewData["title"] = "Alunos";
+
+    var students = new List<Student>();
+    var student1 = new Student
+    {
+        ID = 1,
+        Name = "Marcelo",
+        GlobalRating = 9.3m
+    };
+    var student2 = new Student
+    {
+        ID = 2,
+        Name = "Clarice",
+        GlobalRating = 9.89m
+    };
+    var student3 = new Student
+    {
+        ID = 3,
+        Name = "Luiz",
+        GlobalRating = 8.45m
+    };
+
+    students.Add(student1);
+    students.Add(student2);
+    students.Add(student3);
+}
+
+<div class="container-fluid my-list-container">
+    <h2 class="mt-3">Lista de Alunos:</h2>
     
-    <table id="students-table">
-        <tr>
-            <th>Nome</th>
-            <th>Média Global</th>
-            <th>Matrícula</th>
-        </tr>
-
-        @*
-            TODO: implementar foreach para exibir a lista inteira de registros de alunos
-
-        @foreach (var student in Model.Student)
-        {
-            <tr>
-                <td>Jill</td>
-                <td>Smith</td>
-                <td>50</td>
+    <table class="table my-table mx-auto mt-5">
+        <thead>
+            <tr class="table-success">
+                <th scope="col">Nº</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Média Global</th>
+                <th scope="col">Curso</th>
+                <th scope="col"></th>
             </tr>
-         }
+        </thead>
+        <tbody>
 
-        *@
+            @{
+                int i = 0;
+                foreach (var student in students)
+                {
+                    string rowColor = i % 2 == 0 ? "table-light" : "";
+
+                    <tr class="@rowColor">
+                        <th scope="row">@i</th>
+                        <td>@student.Name</td>
+                        <td>@student.GlobalRating</td>
+                        <td>Ciência da Computação</td>
+                        <td><button class="btn btn-success">Ver Detalhes</button></td>
+                    </tr>
+
+                    i++;
+                }
+             }
+
+        </tbody>
+
+        
+       
 
 
     </table>
 </div>
 
-<img class="img-fluid" src="~/img/test.png" alt="teste" />

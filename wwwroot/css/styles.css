@@ -1,13 +1,38 @@
 ﻿body {
-    background-color: #a5cce9;
-    height: 800px;
+    height: 800px;    
 }
 
-#students-list-container {
-    height: 100vh;
+h1, h2, h3, h4, h5, h6 {
+    color: #106b1c;
 }
 
-#students-table {
-    width: 600px;
-    margin: auto;
+.my-content {
+    max-width: 1000px;
+
 }
+
+.my-nav-item {
+    margin-left: 40px;    
+}
+
+.my-nav-item:hover {
+    background-color: rgba(256, 256, 256, 0.3);
+}
+
+.my-table {
+    max-width: 1000px;    
+}
+
+
+@media only screen and (max-width: 600px) {
+
+    #my-navbar-ul {
+        width: 100%;
+    }
+
+    .my-nav-item {
+        text-align: center;
+        margin-left: 0;
+    }
+}
+
