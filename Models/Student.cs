@@ -33,6 +33,16 @@ namespace PortalDoAluno.Models
         [Column("GlobalRating", TypeName = "decimal(5, 2)")]
         public decimal GlobalRating { get; set; }
 
+        /// <summary>
+        /// ID do curso em que o aluno está inscrito
+        /// </summary>
+        public int CourseID { get; set; }
+
+        /// <summary>
+        /// Propriedade de navegação para a entidade mãe Course em que o aluno está inscrito
+        /// </summary>
+        public Course Course { get; set; }
+
         #endregion
     }
     

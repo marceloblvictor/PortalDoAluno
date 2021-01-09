@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PortalDoAluno.Data;
 
 namespace PortalDoAluno.Migrations
 {
     [DbContext(typeof(PortalDoAlunoDbContext))]
-    partial class PortalDoAlunoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210109144437_CreateStudentAndCourseEntities")]
+    partial class CreateStudentAndCourseEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

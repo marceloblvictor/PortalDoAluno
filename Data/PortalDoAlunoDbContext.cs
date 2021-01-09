@@ -16,9 +16,28 @@ namespace PortalDoAluno.Data
         public PortalDoAlunoDbContext(DbContextOptions<PortalDoAlunoDbContext> options) : base(options) { }
 
         /// <summary>
-        /// Manipula as instâncias do modelo Student
+        /// Configura os modelos de entidades usando a Fluent API
+        /// </summary>
+        /// <param name="modelBuilder">Interface que permite a configuração dos modelos de entidades e seus relacionamentos </param>
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Entity<Blog>()
+            //    .HasOne(b => b.BlogImage)
+            //    .WithOne(i => i.Blog)
+            //    .HasForeignKey<BlogImage>(b => b.BlogForeignKey);
+        }
+
+        /// <summary>
+        /// Manipula as instâncias da entidade Student
         /// </summary>
         public DbSet<Student> Students { get; set; }
-        
+
+        /// <summary>
+        /// Manipula as instâncias da entidade Course
+        /// </summary>
+        public DbSet<Course> Courses { get; set; }
+
     }
 }

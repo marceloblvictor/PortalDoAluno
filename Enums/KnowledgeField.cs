@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// Áreas do Conhecimento tal como definidas pelo CNPq.
 /// </summary>
-internal enum KnowledgeField : byte
+public enum KnowledgeField : byte
 {
     CienciasExatasEDaTerra,
 
