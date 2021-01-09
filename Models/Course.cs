@@ -4,20 +4,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PortalDoAluno.Models
 {
     /// <summary>
-    /// Aluno que frequenta a faculdade.
+    /// Curso ofertado pela faculdade e cursado pelos alunos.
     /// </summary>
-    sealed public class Student
+    internal sealed class Course
     {
         #region Proprieties
 
         /// <summary>
-        /// ID do aluno.
+        /// ID do Curso.
         /// </summary>
         [Key]
         public int ID { get; set; }
 
         /// <summary>
-        /// Nome completo do aluno.
+        /// Nome do Curso.
         /// Máximo de 100 caracteres.
         /// </summary>
         [Required]
@@ -26,14 +26,12 @@ namespace PortalDoAluno.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Média global do aluno.
-        /// Precisão de duas casas decimais no máximo.
+        /// Área do conhecimento a que o Curso pertence.
         /// </summary>
         [Required]
-        [Column("GlobalRating", TypeName = "decimal(5, 2)")]
-        public decimal GlobalRating { get; set; }
+        [Column("KnowLedgeField", TypeName = "varchar(100)")]
+        public KnowledgeField KnowledgeField { get; set; }
 
         #endregion
     }
-    
 }
