@@ -1,30 +1,8 @@
 ﻿@{
     ViewData["title"] = "Alunos";
-
-    var students = new List<Student>();
-    var student1 = new Student
-    {
-        ID = 1,
-        Name = "Marcelo",
-        GlobalRating = 9.3m
-    };
-    var student2 = new Student
-    {
-        ID = 2,
-        Name = "Clarice",
-        GlobalRating = 9.89m
-    };
-    var student3 = new Student
-    {
-        ID = 3,
-        Name = "Luiz",
-        GlobalRating = 8.45m
-    };
-
-    students.Add(student1);
-    students.Add(student2);
-    students.Add(student3);
 }
+
+@model IEnumerable<Student>
 
 <div class="container-fluid my-list-container">
     <h2 class="mt-3">Lista de Alunos:</h2>
@@ -43,7 +21,7 @@
 
             @{
                 int i = 0;
-                foreach (var student in students)
+                foreach (var student in Model)
                 {
                     string rowColor = i % 2 == 0 ? "table-light" : "";
 
@@ -51,7 +29,7 @@
                         <th scope="row">@i</th>
                         <td>@student.Name</td>
                         <td>@student.GlobalRating</td>
-                        <td>Ciência da Computação</td>
+                        <td>@student.Course.Name</td>
                         <td><button class="btn btn-success">Ver Detalhes</button></td>
                     </tr>
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PortalDoAluno.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,20 @@ namespace PortalDoAluno.Controllers
 {
     public class StudentsController : Controller
     {
+        public readonly PortalDoAlunoDbContext _context;
+
+        public StudentsController(PortalDoAlunoDbContext context) 
+        {
+            _context = context;
+        }
+
+        // GET: /Student/
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var students = _context.Students.OrderBy(ent => ent.ID);
+
+            return View(students);
         }
     }
 }
