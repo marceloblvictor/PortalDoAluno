@@ -4,9 +4,13 @@
 
 @model IEnumerable<Student>
 
+
+<p>model count = @Model.Count()</p>
+
+
 <div class="container-fluid my-list-container">
     <h2 class="mt-3">Lista de Alunos:</h2>
-    
+
     <table class="table my-table mx-auto mt-5">
         <thead>
             <tr class="table-success">
@@ -35,13 +39,9 @@
 
                     i++;
                 }
-             }
+            }
 
         </tbody>
-
-        
-       
-
 
     </table>
 </div>

@@ -42,8 +42,6 @@ namespace PortalDoAluno
 
             app.UseRouting();
 
-            app.UseRouting();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();

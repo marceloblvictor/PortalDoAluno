@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PortalDoAluno.Data;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace PortalDoAluno.Controllers
 {
     public class StudentsController : Controller
     {
-        public readonly PortalDoAlunoDbContext _context;
+        private readonly PortalDoAlunoDbContext _context;
 
         public StudentsController(PortalDoAlunoDbContext context) 
         {
@@ -18,9 +19,14 @@ namespace PortalDoAluno.Controllers
 
         // GET: /Student/
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var students = _context.Students.OrderBy(ent => ent.ID);
+            var students = await _context.Students.ToListAsync();
+
+            if (students is null)
+            {
+                return NotFound();
+            }
 
             return View(students);
         }

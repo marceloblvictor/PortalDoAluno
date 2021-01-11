@@ -9,8 +9,8 @@ using PortalDoAluno.Data;
 namespace PortalDoAluno.Migrations
 {
     [DbContext(typeof(PortalDoAlunoDbContext))]
-    [Migration("20210109144437_CreateStudentAndCourseEntities")]
-    partial class CreateStudentAndCourseEntities
+    [Migration("20210111213516_ResetDataBase")]
+    partial class ResetDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

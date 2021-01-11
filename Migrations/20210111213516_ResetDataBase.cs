@@ -2,7 +2,7 @@
 
 namespace PortalDoAluno.Migrations
 {
-    public partial class CreateStudentAndCourseEntities : Migration
+    public partial class ResetDataBase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
