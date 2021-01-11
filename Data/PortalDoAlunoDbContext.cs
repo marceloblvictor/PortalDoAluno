@@ -32,12 +32,12 @@ namespace PortalDoAluno.Data
         /// <summary>
         /// Manipula as instâncias da entidade Student
         /// </summary>
-        public DbSet<Student> Students { get; set; }
+        public DbSet<Student> Student { get; set; }
 
         /// <summary>
         /// Manipula as instâncias da entidade Course
         /// </summary>
-        public DbSet<Course> Courses { get; set; }
+        public DbSet<Course> Course { get; set; }
 
     }
 }

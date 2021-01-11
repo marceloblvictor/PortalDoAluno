@@ -21,7 +21,7 @@ namespace PortalDoAluno.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var students = await _context.Students.ToListAsync();
+            var students = await _context.Student.ToListAsync();
 
             if (students is null)
             {
