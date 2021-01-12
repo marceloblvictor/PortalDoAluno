@@ -35,9 +35,9 @@ namespace PortalDoAluno.Data
         public DbSet<Student> Student { get; set; }
 
         /// <summary>
-        /// Manipula as instâncias da entidade Course
+        /// Manipula as instâncias da entidade Student
         /// </summary>
-        public DbSet<Course> Course { get; set; }
+        public DbSet<PortalDoAluno.Models.Test> Test { get; set; }
 
     }
 }

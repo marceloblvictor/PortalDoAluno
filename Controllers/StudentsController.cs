@@ -30,5 +30,12 @@ namespace PortalDoAluno.Controllers
 
             return View(students);
         }
+
+        // GET: /Student/Create/
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }

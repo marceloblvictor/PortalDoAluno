@@ -38,7 +38,7 @@ namespace PortalDoAluno.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("PortalDoAluno.Models.Student", b =>
@@ -65,7 +65,22 @@ namespace PortalDoAluno.Migrations
 
                     b.HasIndex("CourseID");
 
-                    b.ToTable("Students");
+                    b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("PortalDoAluno.Models.Test", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Test");
                 });
 
             modelBuilder.Entity("PortalDoAluno.Models.Student", b =>

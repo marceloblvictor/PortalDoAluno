@@ -32,10 +32,11 @@ namespace PortalDoAluno.Models
         [Required]
         [Column("KnowLedgeField", TypeName = "varchar(100)")]
         public KnowledgeField KnowledgeField { get; set; }
-        
+
         /// <summary>
-        /// Propriedade de navegação para a coleção de entidades Students
+        /// Propriedade de navegação para a coleção de entidades Students inscritos no curso
         /// </summary>
+        [InverseProperty("Course")]
         public List<Student> Students { get; set; }
 
 

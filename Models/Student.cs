@@ -36,6 +36,7 @@ namespace PortalDoAluno.Models
         /// <summary>
         /// ID do curso em que o aluno está inscrito
         /// </summary>
+        [ForeignKey("Course")]
         public int CourseID { get; set; }
 
         /// <summary>

@@ -2,12 +2,12 @@
 
 namespace PortalDoAluno.Migrations
 {
-    public partial class ResetDataBase : Migration
+    public partial class ResetDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Courses",
+                name: "Course",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -17,11 +17,24 @@ namespace PortalDoAluno.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Courses", x => x.ID);
+                    table.PrimaryKey("PK_Course", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Students",
+                name: "Test",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Test", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Student",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -32,28 +45,31 @@ namespace PortalDoAluno.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Students", x => x.ID);
+                    table.PrimaryKey("PK_Student", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Students_Courses_CourseID",
+                        name: "FK_Student_Course_CourseID",
                         column: x => x.CourseID,
-                        principalTable: "Courses",
+                        principalTable: "Course",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_CourseID",
-                table: "Students",
+                name: "IX_Student_CourseID",
+                table: "Student",
                 column: "CourseID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Students");
+                name: "Student");
 
             migrationBuilder.DropTable(
-                name: "Courses");
+                name: "Test");
+
+            migrationBuilder.DropTable(
+                name: "Course");
         }
     }
 }
