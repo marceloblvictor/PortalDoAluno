@@ -17,25 +17,34 @@ namespace PortalDoAluno.Controllers
             _context = context;
         }
 
-        // GET: /Student/
+        // GET: /Students/
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var students = await _context.Student.ToListAsync();
-
-            if (students is null)
-            {
-                return NotFound();
-            }
+            var students = await _context.Students.ToListAsync();
 
             return View(students);
         }
 
-        // GET: /Student/Create/
+        // GET: /Students/Create/
         [HttpGet]
         public IActionResult Create()
         {
             return View();
+        }
+
+        // GET: /Students/Details/{id}
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
+        {
+            var student = await _context.Students.FirstOrDefaultAsync(ent => ent.ID == id);
+
+            if(student is null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(student);
         }
     }
 }

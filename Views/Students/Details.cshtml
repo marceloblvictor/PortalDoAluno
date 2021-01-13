@@ -1,0 +1,49 @@
+﻿@model PortalDoAluno.Models.Student
+
+@{
+    ViewData["Title"] = "Dados do Estudante";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Estudante:</h4>
+    <hr />
+    <dl class="row">
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+    </dl>
+</div>
+
+<div>
+    <a class="nav-link" asp-controller="Students" asp-action="Edit" asp-route-id="@Model.ID">Editar</a> |
+    <a class="nav-link" asp-controller="Students" asp-action="Index">Voltar</a>
+</div>
+
