@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PortalDoAluno.Data;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ namespace PortalDoAluno.Controllers
 {
     public class CoursesController : Controller
     {
-        private readonly PortalDoAlunoDbContext _context;
+        private readonly PortalDoAlunoDbContext _context;        
 
-        public CoursesController(PortalDoAlunoDbContext context) 
-        {
+        public CoursesController( PortalDoAlunoDbContext context) 
+        {            
             _context = context;
         }
 
@@ -22,7 +23,7 @@ namespace PortalDoAluno.Controllers
         public async Task<IActionResult> Index()
         {
             var courses = await _context.Courses.ToListAsync();
-
+            
             return View(courses);
         }
 

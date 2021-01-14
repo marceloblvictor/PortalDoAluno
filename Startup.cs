@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PortalDoAluno.Data;
@@ -9,6 +10,14 @@ namespace PortalDoAluno
 {
     public class Startup
     {
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+
+        }
+
+        public IConfiguration Configuration { get; }
 
         // Container de injeção de dependências
         public void ConfigureServices(IServiceCollection services)
