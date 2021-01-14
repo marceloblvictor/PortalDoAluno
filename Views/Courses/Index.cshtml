@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["title"] = "Alunos";
+}
+
+@model IEnumerable<Course>
+
+
+<p>model count = @Model.Count()</p>
+
+
+<div class="container-fluid my-list-container">
+    <h2 class="mt-3">Lista de Cursos:</h2>
+    <hr />
+
+    <a asp-controller="Courses" asp-action="Create" class="nav-link">Novo Curso</a>
+    
+    <table class="table my-table mx-auto mt-5">
+        <thead>
+            <tr class="table-success">
+                <th scope="col">Nº</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Carga Horária</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                int i = 0;
+                foreach (var course in Model)
+                {
+                    string rowColor = i % 2 == 0 ? "table-light" : "";
+
+                    <tr class="@rowColor">
+                        <th scope="row">@i</th>
+                        <td>@course.Name</td>
+                        <td>@course.Description </td>
+                        <td>@course.TotalHours</td>
+                        <td><button class="btn btn-success">Ver Detalhes</button></td>
+                    </tr>
+
+                    i++;
+                }
+            }
+
+        </tbody>
+
+    </table>
+</div>
+

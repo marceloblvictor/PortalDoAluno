@@ -6,7 +6,6 @@ namespace PortalDoAluno.Data
     
     sealed public class PortalDoAlunoDbContext : DbContext
     {
-        
         public PortalDoAlunoDbContext(DbContextOptions<PortalDoAlunoDbContext> options) : base(options)
         {
 

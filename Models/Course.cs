@@ -11,8 +11,10 @@ namespace PortalDoAluno.Models
 
         [Key]
         public int ID { get; set; }
-        
-        [Column("Name", TypeName = "varchar(100)")]
+
+        [Required]
+        [Display(Name = "Nome do Curso", Description = "Máximo de 100 caracteres")]
+        [Column("FirstName", TypeName = "varchar(100)")]
         [MaxLength(100)]
         public string Name { get; set; }
 
