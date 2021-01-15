@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PortalDoAluno.Data;
+using PortalDoAluno.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,24 @@ namespace PortalDoAluno.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var students = await _context.Students.ToListAsync();
+            // Com o include, preenche-se a propriedade de navegação às entidades Student
+            var students = await _context.Students.Include( s => s.Course).ToListAsync();
 
             return View(students);
+        }
+
+        // GET: /Students/Details/{id}
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
+        {
+            var student = await _context.Students.FirstOrDefaultAsync(ent => ent.ID == id);
+
+            if (student is null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(student);
         }
 
         // GET: /Students/Create/
@@ -33,18 +49,21 @@ namespace PortalDoAluno.Controllers
             return View();
         }
 
-        // GET: /Students/Details/{id}
-        [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Name, CourseID")] Student student)
         {
-            var student = await _context.Students.FirstOrDefaultAsync(ent => ent.ID == id);
-
-            if(student is null)
+            if (ModelState.IsValid)
             {
+                _context.Add(student);
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
             return View(student);
         }
+
+        
     }
 }

@@ -1,8 +1,10 @@
-﻿@{
+﻿@model IEnumerable<Student>
+
+@{
     ViewData["title"] = "Alunos";
 }
 
-@model IEnumerable<Student>
+
 
 
 
@@ -11,7 +13,38 @@
     <hr />
 
     <a asp-controller="Students" asp-action="Create" class="nav-link">Novo Aluno</a>
-    
-    
+
+    <table class="table my-table mx-auto mt-5">
+        <thead>
+            <tr class="table-success">
+                <th scope="col">Nº</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Curso</th>
+                <th />
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                int i = 0;
+                foreach (var student in Model)
+                {
+                    string rowColor = i % 2 == 0 ? "table-light" : "";
+
+                    <tr class="@rowColor">
+                        <th scope="row">@i</th>
+                        <td>@student.Name</td>
+                        <td>@student.Course.Name </td>
+                        <td><button class="btn btn-success">Ver Detalhes</button></td>
+                    </tr>
+
+                    i++;
+                }
+            }
+
+        </tbody>
+
+    </table>
+
 </div>
 
