@@ -18,7 +18,9 @@ namespace PortalDoAluno.Models
 
         #region Navigation Properties
 
-        public Course Courses { get; set; }
+        public Course Course { get; set; }
+        
+        public int CourseID { get; set; }
 
         #endregion
 

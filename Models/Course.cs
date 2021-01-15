@@ -18,9 +18,11 @@ namespace PortalDoAluno.Models
         [MaxLength(100, ErrorMessage = "Máximo de 100 caracteres")]
         public string Name { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
-        [Range(0, 500)]
+        [Required]
+        [Range(1, 500, ErrorMessage = "A Carga Horária deve ter entre 1 e 500 horas")]
         public int TotalHours { get; set; }
         
         public ContentType ContentType { get; set; }
@@ -39,7 +41,17 @@ namespace PortalDoAluno.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            throw new System.NotImplementedException();
+
+            var validationOutput = new List<ValidationResult>();
+            
+
+            if (!Name.EndsWith("Gratuito") && TotalHours < 10)
+            {
+                validationOutput.Add(new ValidationResult("Se o curso possui menos de 10 horas de carga horária," +
+                    "seu nome deve terminar com a palavra \"Gratuito\""));
+            }
+
+            return validationOutput;
         }
 
         #endregion
