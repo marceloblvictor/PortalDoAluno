@@ -10,6 +10,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .my-content {
     max-width: 1200px;
+    min-height: 600px;
+    padding-bottom: 60px;
 }
 
 .my-nav-item {
@@ -18,6 +20,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .my-nav-item:hover {
     background-color: rgba(256, 256, 256, 0.3);
+    border-radius: 25%;
 }
 
 .my-table {

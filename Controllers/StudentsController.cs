@@ -2,9 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PortalDoAluno.Data;
 using PortalDoAluno.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PortalDoAluno.Controllers
@@ -49,6 +46,7 @@ namespace PortalDoAluno.Controllers
             return View();
         }
 
+        // POST: /Students/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name, CourseID")] Student student)

@@ -11,7 +11,7 @@
 
     <a asp-controller="Courses" asp-action="Create" class="nav-link">Novo Curso</a>
     
-    <table class="table my-table mx-auto mt-5">
+    <table class="table table-striped my-table mx-auto mt-5">
         <thead>
             <tr class="table-success">
                 <th scope="col">Nº</th>
@@ -27,14 +27,12 @@
                 int i = 0;
                 foreach (var course in Model)
                 {
-                    string rowColor = i % 2 == 0 ? "table-light" : "";
-
-                    <tr class="@rowColor">
+                    <tr>
                         <th scope="row">@i</th>
                         <td>@course.Name</td>
                         <td>@course.Description </td>
-                        <td>@course.TotalHours</td>
-                        <td><button class="btn btn-success">Ver Detalhes</button></td>
+                        <td class="text-center">@course.TotalHours</td>
+                        <td><a asp-action="Details" asp-route-id="@course.ID" class="btn btn-success">Ver Detalhes</a></td>
                     </tr>
 
                     i++;

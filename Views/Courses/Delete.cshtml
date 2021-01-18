@@ -1,0 +1,16 @@
+﻿@model Course
+
+@{
+    ViewData["title"] = "Apagar Curso";
+}
+
+
+<div class="container mx-auto my-5 p-3 d-grid gap-3">
+
+    <h2 class="text-center mt-5">Apagar Curso @Model.Name?</h2>
+
+    <a asp-action="Details" asp-route-id="@Model.ID" class="btn btn-light w-25 mx-auto">Não</a>
+    <a asp-action="Delete" asp-route-id="@Model.ID" asp-route-confirmed="true" class="btn btn-danger w-25 mx-auto">Sim</a>
+
+</div>
+
