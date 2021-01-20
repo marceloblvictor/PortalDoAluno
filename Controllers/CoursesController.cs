@@ -23,17 +23,51 @@ namespace PortalDoAluno.Controllers
 
         // GET: /Courses/
         [HttpGet]
-        public async Task<IActionResult> Index(string searchString="")
+        public async Task<IActionResult> Index(string searchString="", string sortingOrder="")
         {
-            
-            var courses = await _context.Courses.ToListAsync();
+
+            var courses = from course in _context.Courses
+                          select course;
 
             if (!String.IsNullOrWhiteSpace(searchString))
             {
-                courses = courses.Where(c => c.Name.Contains(searchString)).ToList();
+                courses = courses.Where(c => c.Name.Contains(searchString));
             }
+
+            switch (sortingOrder)
+            {
+                case "name":
+                    goto default;                    
+
+                case "name_desc":
+                    courses = courses.OrderByDescending(c => c.Name);
+                    break;
+
+                case "description":
+                    courses = courses.OrderBy(c => c.Description);
+                    break;
+
+                case "description_desc":
+                    courses = courses.OrderByDescending(c => c.Description);
+                    break;
+
+                case "totalHours":
+                    courses = courses.OrderBy(c => c.TotalHours);
+                    break;
+
+                case "totalHours_desc":
+                    courses = courses.OrderByDescending(c => c.TotalHours);
+                    break;
+                
+                default:
+                    courses = courses.OrderBy(c => c.Name);
+                    break;
+            }
+
+            ViewBag.searchString = searchString;
+            ViewBag.sortingOrder = sortingOrder;
             
-            return View(courses);
+            return View(await courses.AsNoTracking().ToListAsync());
         }
 
         // GET: /Courses/Details/{id}

@@ -1,30 +1,51 @@
 ﻿@{
     ViewData["title"] = "Alunos";
+
+    String nameSortingString = ViewBag.sortingOrder == "name" ? "name_desc" : "name";
+    String descriptionSortingString = ViewBag.sortingOrder == "description" ? "description_desc" : "description";
+    String totalHoursSortingString = ViewBag.sortingOrder == "totalHours" ? "totalHours_desc" : "totalHours";
 }
 
 @model IEnumerable<Course>
 
 
-<div class="container-fluid my-list-container">
+<div class="container-fluid my-list-container pb-5">
     <h2 class="my-3">Lista de Cursos:</h2>
     
-    <form asp-action="Index" method="get"class="form-group container">
-        <input name="searchString" class="form-control w-25" />
-        <button type="submit" class="btn btn-success mt-3">Buscar</button>
+    <form asp-action="Index" method="get" class="form-group">
+        <input name="searchString" class="form-control w-25 mb-3" value="@ViewBag.searchString" />
+        
+        <button type="submit" class="btn btn-success d-inline">Buscar</button>
+
+        @if (!String.IsNullOrWhiteSpace(ViewBag.searchString))
+        {
+            <a asp-action="Index" asp-route-searchString="" class="nav-link d-inline ml-3">Voltar para a Lista</a>
+        }
+       
     </form>
     
     
     <hr />
 
-    <a asp-controller="Courses" asp-action="Create" class="nav-link d-inline">Novo Curso</a>
+    <a asp-action="Create" class="nav-link d-inline">Novo Curso</a>
     
     <table class="table table-striped my-table mx-auto mt-5">
         <thead>
             <tr class="table-success">
-                <th scope="col">Nº</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Descrição</th>
-                <th scope="col">Carga Horária</th>
+                <th scope="col">#</th>
+                
+                <th scope="col">
+                    <a asp-action="Index" asp-route-searchString="@ViewBag.searchString"
+                       asp-route-sortingOrder="@nameSortingString" class="text-decoration-none">Nome</a>
+                </th>
+                <th scope="col">
+                    <a asp-action="Index" asp-route-searchString="@ViewBag.searchString"
+                       asp-route-sortingOrder="@descriptionSortingString" class="text-decoration-none">Descrição</a>
+                </th>
+                <th scope="col">
+                    <a asp-action="Index" asp-route-searchString="@ViewBag.searchString"
+                       asp-route-sortingOrder="@totalHoursSortingString" class="text-decoration-none">Carga Horária</a>
+                </th>
                 <th scope="col"></th>
             </tr>
         </thead>
