@@ -6,10 +6,17 @@
 
 
 <div class="container-fluid my-list-container">
-    <h2 class="mt-3">Lista de Cursos:</h2>
+    <h2 class="my-3">Lista de Cursos:</h2>
+    
+    <form asp-action="Index" method="get"class="form-group container">
+        <input name="searchString" class="form-control w-25" />
+        <button type="submit" class="btn btn-success mt-3">Buscar</button>
+    </form>
+    
+    
     <hr />
 
-    <a asp-controller="Courses" asp-action="Create" class="nav-link">Novo Curso</a>
+    <a asp-controller="Courses" asp-action="Create" class="nav-link d-inline">Novo Curso</a>
     
     <table class="table table-striped my-table mx-auto mt-5">
         <thead>

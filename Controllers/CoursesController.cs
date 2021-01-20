@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+// TODO: acrescentar blocos try/catch nos acessos à DB!
+
 namespace PortalDoAluno.Controllers
 {
     public class CoursesController : Controller
@@ -21,9 +23,15 @@ namespace PortalDoAluno.Controllers
 
         // GET: /Courses/
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString="")
         {
+            
             var courses = await _context.Courses.ToListAsync();
+
+            if (!String.IsNullOrWhiteSpace(searchString))
+            {
+                courses = courses.Where(c => c.Name.Contains(searchString)).ToList();
+            }
             
             return View(courses);
         }
@@ -42,7 +50,7 @@ namespace PortalDoAluno.Controllers
             if(course is null)
             {
                 return RedirectToAction(nameof(Index));
-            }
+            }            
 
             return View(course);
         }
@@ -87,9 +95,9 @@ namespace PortalDoAluno.Controllers
             return View(course);
         }
 
-        [HttpPost, ActionName("Edit")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPost(int? id,
+        public async Task<IActionResult> Edit(int? id,
             [Bind("ID,Name,Description,TotalHours,ContentType")] Course course)
         {
             if (id == null)
@@ -117,7 +125,7 @@ namespace PortalDoAluno.Controllers
             return View(course);
         }
 
-       
+        // TODO: dividir em um action para o GET e outro para o POST!
         public async Task<IActionResult> Delete(int? id, bool? confirmed = false)
         {
             if (id is null)

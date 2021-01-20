@@ -53,9 +53,14 @@ namespace PortalDoAluno
 
             app.UseEndpoints(endpoints =>
             {
+                // Same as:
+                //endpoints.MapControllerRoute(
+                //name: "default",
+                //pattern: "{controller=Home}/{action=Index}/{id?}");
+                //});
                 endpoints.MapDefaultControllerRoute();
 
-            });
+            });    
         }
-    }
+    }   
 }
