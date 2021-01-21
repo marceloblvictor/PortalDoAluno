@@ -6,34 +6,34 @@
     String totalHoursSortingString = ViewBag.sortingOrder == "totalHours" ? "totalHours_desc" : "totalHours";
 }
 
-@model IEnumerable<Course>
+@model Pagination<Course>
 
 
 <div class="container-fluid my-list-container pb-5">
-    <h2 class="my-3">Lista de Cursos:</h2>
-    
+    <h2 class="my-3">Lista de Cursos (@ViewBag.totalCourses):</h2>
+
     <form asp-action="Index" method="get" class="form-group">
         <input name="searchString" class="form-control w-25 mb-3" value="@ViewBag.searchString" />
-        
+
         <button type="submit" class="btn btn-success d-inline">Buscar</button>
 
         @if (!String.IsNullOrWhiteSpace(ViewBag.searchString))
         {
             <a asp-action="Index" asp-route-searchString="" class="nav-link d-inline ml-3">Voltar para a Lista</a>
         }
-       
+
     </form>
-    
-    
+
+
     <hr />
 
     <a asp-action="Create" class="nav-link d-inline">Novo Curso</a>
-    
+
     <table class="table table-striped my-table mx-auto mt-5">
         <thead>
             <tr class="table-success">
                 <th scope="col">#</th>
-                
+
                 <th scope="col">
                     <a asp-action="Index" asp-route-searchString="@ViewBag.searchString"
                        asp-route-sortingOrder="@nameSortingString" class="text-decoration-none">Nome</a>
@@ -53,10 +53,13 @@
 
             @{
                 int i = 0;
+                var numberLabel = 0;
                 foreach (var course in Model)
                 {
+                    numberLabel = (i + 1) + ((ViewBag.pageNumber - 1) * ViewBag.itemsPerPage);
+                    
                     <tr>
-                        <th scope="row">@i</th>
+                        <th scope="row">@numberLabel</th>
                         <td>@course.Name</td>
                         <td>@course.Description </td>
                         <td class="text-center">@course.TotalHours</td>
@@ -68,7 +71,29 @@
             }
 
         </tbody>
-
     </table>
+
+    @{
+        var prevDisabled = !Model.HasPrevious() ? "disabled" : "";
+        var nextDisabled = !Model.HasNext() ? "disabled" : "";
+    }
+
+        <div class="container text-center pt-5">
+            <a asp-action="Index"
+               asp-route-pageNumber="@(Model.Index - 1)"
+               asp-route-sortingOrder="@ViewBag.sortingOrder"
+               asp-route-searchString="@ViewBag.searchString"
+               class="btn btn-success @prevDisabled">
+                Anterior
+            </a>
+            <a asp-action="Index"
+               asp-route-pageNumber="@(Model.Index + 1)"
+               asp-route-sortingOrder="@ViewBag.sortingOrder"
+               asp-route-searchString="@ViewBag.searchString"
+               class="btn btn-success @nextDisabled">
+                Próxima
+            </a>
+        </div>
+
 </div>
 

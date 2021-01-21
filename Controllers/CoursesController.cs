@@ -23,17 +23,23 @@ namespace PortalDoAluno.Controllers
 
         // GET: /Courses/
         [HttpGet]
-        public async Task<IActionResult> Index(string searchString="", string sortingOrder="")
+        public async Task<IActionResult> Index(string searchString="", string sortingOrder="", 
+            int itemsPerPage = 5, int pageNumber = 1)
         {
 
+            // gera uma variável IQueryable
             var courses = from course in _context.Courses
                           select course;
+                       
 
             if (!String.IsNullOrWhiteSpace(searchString))
-            {
+            {                
+                // Como a query está sendo feita num IQueryable, ela será feita no servidor e a comparação (Contains) será case insensitive (default do SQL Server)
+                // Se fosse usado o Linq to entity num IEnumberable, a comparação (Contains) é case insensitive por default
                 courses = courses.Where(c => c.Name.Contains(searchString));
             }
 
+            // TODO: levar isso para fora do Controller (fachada?)!
             switch (sortingOrder)
             {
                 case "name":
@@ -66,8 +72,17 @@ namespace PortalDoAluno.Controllers
 
             ViewBag.searchString = searchString;
             ViewBag.sortingOrder = sortingOrder;
-            
-            return View(await courses.AsNoTracking().ToListAsync());
+            ViewBag.pageNumber = pageNumber;
+            ViewBag.itemsPerPage = itemsPerPage;
+            ViewBag.totalCourses = await courses.CountAsync();
+
+
+            //The code creates an IQueryable variable before the switch statement, modifies it in the switch statement, 
+            //and calls the ToListAsync method after the switch statement.When you create and modify IQueryable variables, 
+            //no query is sent to the database. The query isn't executed until you convert the IQueryable object into a 
+            //collection by calling a method such as ToListAsync. Therefore, this code results in a single query that's not 
+            //executed until the return View statement.
+            return View(await Pagination<Course>.CreateAsync(courses.AsNoTracking(), itemsPerPage, pageNumber));            
         }
 
         // GET: /Courses/Details/{id}
