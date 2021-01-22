@@ -13,9 +13,10 @@ namespace PortalDoAluno.Models
         public int ID { get; set; }
 
         [Required]
-        [Display(Name = "Nome do Curso", Description = "Máximo de 100 caracteres")]
-        [Column("FirstName", TypeName = "varchar(100)")]
-        [MaxLength(100, ErrorMessage = "Máximo de 100 caracteres")]
+        [Display(Name = "Nome do Curso", Description = "Nome e sobrenomes com primeira letra maiúscula")]
+        [Column("FirstName", TypeName = "varchar(100)")]    
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Máximo de 100 caracteres")]
+        [RegularExpression(@"^[A-Z][a-z]+(\s[A-Za-z]+)*$", ErrorMessage = "Nome e sobrenomes com primeira letra maiúscula")]
         public string Name { get; set; }
 
         [Required]
