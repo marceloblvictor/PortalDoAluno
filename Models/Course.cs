@@ -15,31 +15,26 @@ namespace PortalDoAluno.Models
         public int ID { get; set; }
 
         [Required]
-        [Display(Name = "Nome do Curso", Description = "Nome e sobrenomes com primeira letra maiúscula")]
-        [Column("FirstName", TypeName = "varchar(100)")]    
+        [Display(Name = "Nome da Disciplina", Description = "Máximo de 100 caracteres")]
+        [Column("Name", TypeName = "varchar(100)")]    
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Máximo de 100 caracteres")]
-        [RegularExpression(@"^[A-Z][a-z]+(\s[A-Za-z]+)*$", ErrorMessage = "Nome e sobrenomes com primeira letra maiúscula")]
+        
         public string Name { get; set; }
 
         [Required]
         public string Description { get; set; }
 
         [Required]
-        [Range(1, 500, ErrorMessage = "A Carga Horária deve ter entre 1 e 500 horas")]
+        [Range(1, 100, ErrorMessage = "A Carga Horária deve ter entre 1 e 100 horas")]
         public int TotalHours { get; set; }
-
-        [DisplayFormat(NullDisplayText = "Não Informado")]
-        public ContentType? ContentType { get; set; }
-
-        [DataType(DataType.Currency)]
-        [Column(TypeName = "money")]
-        public decimal Price { get; set; }
 
         #endregion
 
         #region Navigation Properties
 
         public List<Student> Students { get; set; }
+
+        public List<Professor> Professors { get; set; }
 
         #endregion
 

@@ -20,7 +20,7 @@ namespace PortalDoAluno.Controllers
         public async Task<IActionResult> Index()
         {
             // Com o include, preenche-se a propriedade de navegação às entidades Student
-            var students = await _context.Students.Include( s => s.Course).ToListAsync();
+            var students = await _context.Students.Include( s => s.Enrollments).ToListAsync();
 
             return View(students);
         }
