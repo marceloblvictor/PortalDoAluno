@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PortalDoAluno.Data;
 using PortalDoAluno.Models;
+using PortalDoAluno.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,14 @@ namespace PortalDoAluno.Controllers
 {
     public class CoursesController : Controller
     {
-        private readonly PortalDoAlunoDbContext _context;        
+        private readonly PortalDoAlunoDbContext _context;       
+        
+        private readonly CoursesRepository _repository;
 
-        public CoursesController( PortalDoAlunoDbContext context) 
+        public CoursesController(PortalDoAlunoDbContext context) 
         {            
             _context = context;
+            _repository = new CoursesRepository(context);
         }
 
         // GET: /Courses/
@@ -26,10 +30,8 @@ namespace PortalDoAluno.Controllers
         public async Task<IActionResult> Index(string searchString="", string sortingOrder="", 
             int itemsPerPage = 5, int pageNumber = 1)
         {
-
-            // gera uma variável IQueryable
-            var courses = from course in _context.Courses
-                          select course;
+            
+            var courses = _repository.GetAll();
                        
 
             if (!String.IsNullOrWhiteSpace(searchString))
