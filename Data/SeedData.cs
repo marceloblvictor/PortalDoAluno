@@ -6,6 +6,11 @@ namespace PortalDoAluno.Data
 {
     static public class DataSeeder
     {               
+        static public void GenerateData(PortalDoAlunoDbContext context)
+        {
+
+        }
+
         static public void Initialize(PortalDoAlunoDbContext context)
         {
             context.Database.EnsureCreated();
@@ -14,6 +19,8 @@ namespace PortalDoAluno.Data
             {
                 return;
             }
+
+            GenerateData(context);
 
             var courses = new Course[]
             {

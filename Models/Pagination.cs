@@ -26,11 +26,11 @@ namespace PortalDoAluno.Models
         public bool HasNext() => Index <= TotalPages;
 
         
-        public static async Task<Pagination<T>> CreateAsync(IQueryable<T> source, int itemsPerPage, int pageIndex)
+        public static Pagination<T> Create(IEnumerable<T> source, int count, int itemsPerPage, int pageIndex)
         {
-            var count = await source.CountAsync();
+            
             int pastItems = (pageIndex - 1) * itemsPerPage;
-            var items = await source.Skip<T>(pastItems).Take(itemsPerPage).ToListAsync();
+            var items = source.Skip<T>(pastItems).Take(itemsPerPage);
 
             return new Pagination<T>(items, count, itemsPerPage, pageIndex);
         } 

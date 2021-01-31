@@ -14,15 +14,14 @@ using System.Threading.Tasks;
 namespace PortalDoAluno.Controllers
 {
     public class CoursesController : Controller
-    {
-        private readonly PortalDoAlunoDbContext _context;       
-        
-        private readonly CoursesRepository _repository;
+    {          
 
-        public CoursesController(PortalDoAlunoDbContext context) 
+        private readonly ICoursesRepository _repository;
+
+        public CoursesController(ICoursesRepository repository) 
         {            
-            _context = context;
-            _repository = new CoursesRepository(context);
+            
+            _repository = repository;
         }
 
         // GET: /Courses/
@@ -31,7 +30,7 @@ namespace PortalDoAluno.Controllers
             int itemsPerPage = 5, int pageNumber = 1)
         {
             
-            var courses = _repository.GetAll();
+            IEnumerable<Course> courses = await _repository.GetAll();
                        
 
             if (!String.IsNullOrWhiteSpace(searchString))
@@ -76,7 +75,7 @@ namespace PortalDoAluno.Controllers
             ViewBag.sortingOrder = sortingOrder;
             ViewBag.pageNumber = pageNumber;
             ViewBag.itemsPerPage = itemsPerPage;
-            ViewBag.totalCourses = await courses.CountAsync();
+            ViewBag.totalCourses = await _repository.Count();
 
 
             //The code creates an IQueryable variable before the switch statement, modifies it in the switch statement, 
@@ -84,7 +83,7 @@ namespace PortalDoAluno.Controllers
             //no query is sent to the database. The query isn't executed until you convert the IQueryable object into a 
             //collection by calling a method such as ToListAsync. Therefore, this code results in a single query that's not 
             //executed until the return View statement.
-            return View(await Pagination<Course>.CreateAsync(courses.AsNoTracking(), itemsPerPage, pageNumber));            
+            return View(Pagination<Course>.Create(courses, ViewBag.totalCourses, itemsPerPage, pageNumber));            
         }
 
         // GET: /Courses/Details/{id}
@@ -96,7 +95,7 @@ namespace PortalDoAluno.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var course = await _context.Courses.FirstOrDefaultAsync(ent => ent.ID == id);
+            var course = await _repository.GetOne((int) id);
 
             if(course is null)
             {
@@ -106,95 +105,95 @@ namespace PortalDoAluno.Controllers
             return View(course);
         }
 
-        // GET: /Courses/Create/
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        //// GET: /Courses/Create/
+        //[HttpGet]
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description,TotalHours,ContentType")] Course course)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(course);
-                await _context.SaveChangesAsync();
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Name,Description,TotalHours,ContentType")] Course course)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(course);
+        //        await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
-            }
+        //        return RedirectToAction(nameof(Index));
+        //    }
 
-            return View(course);
-        }
+        //    return View(course);
+        //}
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id is null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
+        //[HttpGet]
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id is null)
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
 
-            var course = await _context.Courses.AsNoTracking().FirstOrDefaultAsync(ent => ent.ID == id);
+        //    var course = await _context.Courses.AsNoTracking().FirstOrDefaultAsync(ent => ent.ID == id);
 
-            if (course is null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
+        //    if (course is null)
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
 
-            return View(course);
-        }
+        //    return View(course);
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id,
-            [Bind("ID,Name,Description,TotalHours,ContentType")] Course course)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int? id,
+        //    [Bind("ID,Name,Description,TotalHours,ContentType")] Course course)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(course);
-                    await _context.SaveChangesAsync();
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(course);
+        //            await _context.SaveChangesAsync();
 
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateException /* ex */)
-                {
-                    //Log the error (uncomment ex variable name and write a log.)
-                    ModelState.AddModelError("", "Unable to save changes. " +
-                        "Try again, and if the problem persists, " +
-                        "see your system administrator.");
-                }
-            }
-            return View(course);
-        }
+        //            return RedirectToAction(nameof(Index));
+        //        }
+        //        catch (DbUpdateException /* ex */)
+        //        {
+        //            //Log the error (uncomment ex variable name and write a log.)
+        //            ModelState.AddModelError("", "Unable to save changes. " +
+        //                "Try again, and if the problem persists, " +
+        //                "see your system administrator.");
+        //        }
+        //    }
+        //    return View(course);
+        //}
 
-        // TODO: dividir em um action para o GET e outro para o POST!
-        public async Task<IActionResult> Delete(int? id, bool? confirmed = false)
-        {
-            if (id is null)
-            {
-                return NotFound();
-            }
+        //// TODO: dividir em um action para o GET e outro para o POST!
+        //public async Task<IActionResult> Delete(int? id, bool? confirmed = false)
+        //{
+        //    if (id is null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var courseToBeDeleted = await _context.Courses.FirstOrDefaultAsync(ent => ent.ID == id);
+        //    var courseToBeDeleted = await _context.Courses.FirstOrDefaultAsync(ent => ent.ID == id);
 
-            if (confirmed == true)
-            {                
-                _context.Courses.Remove(courseToBeDeleted);
-                await _context.SaveChangesAsync();
+        //    if (confirmed == true)
+        //    {                
+        //        _context.Courses.Remove(courseToBeDeleted);
+        //        await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
-            }
+        //        return RedirectToAction(nameof(Index));
+        //    }
 
-            return View(courseToBeDeleted);
-        }
+        //    return View(courseToBeDeleted);
+        //}
     }
 }
