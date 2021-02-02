@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PortalDoAluno.Data;
+using PortalDoAluno.DTO;
+using PortalDoAluno.Facade;
 using PortalDoAluno.Models;
 using PortalDoAluno.Repository;
 using System;
@@ -15,13 +17,13 @@ namespace PortalDoAluno.Controllers
 {
     public class CoursesController : Controller
     {          
-
         private readonly ICoursesRepository _repository;
+        private readonly ICoursesFacade _facade;
 
-        public CoursesController(ICoursesRepository repository) 
+        public CoursesController(ICoursesRepository repository, ICoursesFacade facade) 
         {            
-            
             _repository = repository;
+            _facade = facade;
         }
 
         // GET: /Courses/
@@ -29,10 +31,8 @@ namespace PortalDoAluno.Controllers
         public async Task<IActionResult> Index(string searchString="", string sortingOrder="", 
             int itemsPerPage = 5, int pageNumber = 1)
         {
-            
             IEnumerable<Course> courses = await _repository.GetAll();
                        
-
             if (!String.IsNullOrWhiteSpace(searchString))
             {                
                 // Como a query está sendo feita num IQueryable, ela será feita no servidor e a comparação (Contains) será case insensitive (default do SQL Server)
@@ -77,13 +77,14 @@ namespace PortalDoAluno.Controllers
             ViewBag.itemsPerPage = itemsPerPage;
             ViewBag.totalCourses = await _repository.Count();
 
+            
 
             //The code creates an IQueryable variable before the switch statement, modifies it in the switch statement, 
             //and calls the ToListAsync method after the switch statement.When you create and modify IQueryable variables, 
             //no query is sent to the database. The query isn't executed until you convert the IQueryable object into a 
             //collection by calling a method such as ToListAsync. Therefore, this code results in a single query that's not 
             //executed until the return View statement.
-            return View(Pagination<Course>.Create(courses, ViewBag.totalCourses, itemsPerPage, pageNumber));            
+            return View(Pagination<CourseOT>.Create(_facade.BuildOTList(courses), ViewBag.totalCourses, itemsPerPage, pageNumber));            
         }
 
         // GET: /Courses/Details/{id}

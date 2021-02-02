@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PortalDoAluno.Data;
+using PortalDoAluno.Facade;
 using PortalDoAluno.Repository;
 
 namespace PortalDoAluno
@@ -23,13 +24,12 @@ namespace PortalDoAluno
         // Container de injeção de dependências
         public void ConfigureServices(IServiceCollection services)
         {
-            // Adiciona os controllers (com views) do MVC como uma dependência da aplicação
             services.AddControllersWithViews();
-
+            
             services.AddScoped<ICoursesRepository, CoursesRepository>();
-
-            // Adiciona o Context do Entity Framework como uma dependência da aplicação
-            // Obtém a connection string de appsettings.json
+            
+            services.AddScoped<ICoursesFacade, CoursesFacade>();
+            
             services.AddDbContext<PortalDoAlunoDbContext>(
                     options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection")
                 );

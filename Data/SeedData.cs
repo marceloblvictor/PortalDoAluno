@@ -6,11 +6,6 @@ namespace PortalDoAluno.Data
 {
     static public class DataSeeder
     {               
-        static public void GenerateData(PortalDoAlunoDbContext context)
-        {
-
-        }
-
         static public void Initialize(PortalDoAlunoDbContext context)
         {
             context.Database.EnsureCreated();
@@ -19,8 +14,6 @@ namespace PortalDoAluno.Data
             {
                 return;
             }
-
-            GenerateData(context);
 
             var courses = new Course[]
             {
@@ -39,7 +32,7 @@ namespace PortalDoAluno.Data
                 new Student {Username="rasputin420", Password="abcd1234", Email="rasputinputin@gmail.com",
                 RegistrationDate=DateTime.Now, Name="Francisco Rasputin"},
                 new Student {Username="marily_manson", Password="abcd1234", Email="marimanlinson@gmail.com",
-                RegistrationDate=DateTime.Now, Name="Marilyn Manson"},
+                RegistrationDate=DateTime.Now, Name="Marilyn Manson"}
             };
 
             context.Students.AddRange(students);

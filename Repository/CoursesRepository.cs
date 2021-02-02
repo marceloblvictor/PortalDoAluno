@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PortalDoAluno.Data;
+using PortalDoAluno.DTO;
+using PortalDoAluno.Facade;
 using PortalDoAluno.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +12,6 @@ namespace PortalDoAluno.Repository
     public class CoursesRepository : ICoursesRepository
     {
         public PortalDoAlunoDbContext _context { get; set; }
-
-        public IEnumerable<Course> Courses { get; set; }
         
         public CoursesRepository(PortalDoAlunoDbContext context)
         {
@@ -28,9 +28,9 @@ namespace PortalDoAluno.Repository
 
         public async Task<IEnumerable<Course>> GetAll()
         {
-            Courses = await _context.Courses.AsNoTracking().ToListAsync();
+            var courses = await _context.Courses.AsNoTracking().ToListAsync();
 
-            return Courses;
+            return courses;
         }
 
         public async Task<int> Count() => await _context.Courses.CountAsync();

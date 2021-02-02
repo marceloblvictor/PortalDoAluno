@@ -11,9 +11,7 @@ namespace PortalDoAluno.Repository
     public interface ICoursesRepository
     {
         public PortalDoAlunoDbContext _context { get; set; }
-
-        public IEnumerable<Course> Courses { get; set; }
-
+        
         public Task<Course> GetOne(int id);
 
         public Task<IEnumerable<Course>> GetAll();
