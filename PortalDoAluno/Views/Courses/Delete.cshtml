@@ -1,0 +1,29 @@
+﻿@model Course
+
+@{
+    ViewData["title"] = "Apagar Curso";
+}
+
+
+<div class="container mx-auto my-5 p-3 d-grid gap-3">
+
+    <dl class="row bg-light w-50 mx-auto">
+        <dt class="col-3">@Html.DisplayNameFor(model => model.Name)</dt>
+        <dd class="col-9">@Html.DisplayFor(model => model.Name)</dd>
+
+        <dt class="col-3">@Html.DisplayNameFor(model => model.Description)</dt>
+        <dd class="col-9">@Html.DisplayFor(model => model.Description)</dd>
+
+        <dt class="col-3">@Html.DisplayNameFor(model => model.TotalHours)</dt>
+        <dd class="col-9">@Html.DisplayFor(model => model.TotalHours)</dd>
+    </dl>
+
+    <hr />
+
+    <h2 class="text-center mt-5">Apagar Curso?</h2>
+
+    <a asp-action="Details" asp-route-id="@Model.ID" class="btn btn-light w-25 mx-auto">Não</a>
+    <a asp-action="Delete" asp-route-id="@Model.ID" asp-route-confirmed="true" class="btn btn-danger w-25 mx-auto">Sim</a>
+
+</div>
+

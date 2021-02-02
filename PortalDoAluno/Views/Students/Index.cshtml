@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Student>
+
+@{
+    ViewData["title"] = "Alunos";
+}
+
+<div class="container-fluid my-list-container">
+    <h2 class="mt-3">Lista de Alunos:</h2>
+    <hr />
+
+    <table class="table table-striped my-table mx-auto mt-5">
+        <thead>
+            <tr class="table-success">
+                <th scope="col">Nº</th>
+                <th scope="col">Nome</th>
+                <th scope="col">E-mail</th>
+                <th />
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 0;
+                foreach (var student in Model)
+                {
+                    <tr>
+                        <th scope="row">@i</th>
+                        <td>@student.Name</td>
+                        <td>@student.Email </td>
+                        <td><a asp-action="Details" asp-route-id="@student.ID" class="btn btn-success">Ver Detalhes</a></td>
+                    </tr>
+
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
