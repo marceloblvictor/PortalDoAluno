@@ -124,11 +124,32 @@ namespace PortalDoAluno.Controllers
 
             if (ModelState.IsValid)
             {
-                await _repository.Update(course, (int) id);
+                await _repository.Update(course);
             }
             return RedirectToAction(nameof(Details), new { id = id });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id is null)
+            {
+                return NotFound();
+            }
+
+            var course = await _repository.GetOne((int) id);
+
+            return View(course);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _repository.Delete(id);
+
+            return RedirectToAction(nameof(Index));
+        }
         //// TODO: dividir em um action para o GET e outro para o POST!
         //public async Task<IActionResult> Delete(int? id, bool? confirmed = false)
         //{

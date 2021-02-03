@@ -90,7 +90,8 @@ namespace PortalDoAluno.Repository
                 return false;
             }
         }
-        public async Task<bool> Update(Course course, int courseID)
+
+        public async Task<bool> Update(Course course)
         {            
             try
             {

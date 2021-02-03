@@ -42,7 +42,7 @@ namespace PortalDoAluno.Repository
         /// <param name="course">A instância da entidade Course que substiturá o registro da entidade Course</param>
         /// <param name="courseID">ID do registro da entidade Course que será editado</param>
         /// <returns>Retorna um boolean indicando se a operação foi bem sucedida </returns>
-        public Task<bool> Update(Course course, int courseID);
+        public Task<bool> Update(Course course);
 
         /// <summary>
         /// Exclui o registro da entidade Course cujo ID é passado como parâmetro
