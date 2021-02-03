@@ -40,6 +40,8 @@ namespace PortalDoAluno.Repository
             try
             {
                 await _context.Courses.AddAsync(course);
+                await _context.SaveChangesAsync();
+
                 return true;
             }
             catch (DbUpdateException ex)
@@ -49,13 +51,12 @@ namespace PortalDoAluno.Repository
                 return false;
             }
         }
-
-        public bool Update(Course course, int courseID)
+        public Task<bool> Update(Course course, int courseID)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Delete(int courseID)
+        public Task<bool> Delete(int courseID)
         {
             throw new System.NotImplementedException();
         }

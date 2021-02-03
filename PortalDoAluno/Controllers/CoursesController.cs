@@ -41,11 +41,12 @@ namespace PortalDoAluno.Controllers
             }
 
             // Ordena os registros da entidade Course conforme a ordem passada pelo cliente
-             _facade.SortList(courses, sortingOrder);
+             var sortedCourses = _facade.SortList(courses, sortingOrder);
 
             // Monta uma lista com os objetos de transferência
-            var coursesOTs = _facade.BuildOTList(courses);
+            var coursesOTs = _facade.BuildOTList(sortedCourses);
 
+            // Passa pela ViewBag valores relevantes para a interface
             ViewBag.searchString = searchString;
             ViewBag.sortingOrder = sortingOrder;
             ViewBag.pageNumber = pageNumber;
@@ -74,27 +75,26 @@ namespace PortalDoAluno.Controllers
             return View(course);
         }
 
-        //// GET: /Courses/Create/
-        //[HttpGet]
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: /Courses/Create/
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Name,Description,TotalHours,ContentType")] Course course)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(course);
-        //        await _context.SaveChangesAsync();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Name,Description,TotalHours")] Course course)
+        {
+            if (ModelState.IsValid)
+            {
+                await _repository.Add(course);
+                
+                return RedirectToAction(nameof(Index));
+            }
 
-        //        return RedirectToAction(nameof(Index));
-        //    }
-
-        //    return View(course);
-        //}
+            return View(course);
+        }
 
         //[HttpGet]
         //public async Task<IActionResult> Edit(int? id)

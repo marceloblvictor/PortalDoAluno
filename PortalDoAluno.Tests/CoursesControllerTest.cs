@@ -7,6 +7,7 @@ using PortalDoAluno.Models;
 using PortalDoAluno.Repository;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace PortalDoAluno.Tests
@@ -59,5 +60,55 @@ namespace PortalDoAluno.Tests
             var model = Assert.IsAssignableFrom<Pagination<CourseOT>>(viewResult.ViewData.Model);        
             Assert.Equal(3, model.Count());
         }
+
+        [Fact]
+        public async void Create_NewCoursePost_Redirects()
+        {
+            // Arrange
+            var falseRepository = new Mock<ICoursesRepository>();
+            var coursesFacade = new CoursesFacade();
+            falseRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GenerateFakeCourses());
+            var coursesController = new CoursesController(falseRepository.Object, coursesFacade);
+
+            Course new_course = new Course
+            {
+                Name = "Paradigmas",
+                Description = "Aprenda várias linguagens diferentes",
+                TotalHours = 44
+            };
+
+            // Act
+            var result = await coursesController.Create(new_course);
+
+            // Assert
+            Assert.IsType<RedirectToActionResult>(result);            
+        }
+
+        //[Fact]
+        //public async void Create_NewCoursePost_AddsNewCourseEntity()
+        //{
+        //    // Arrange
+        //    var mockRepository = new Mock<ICoursesRepository>();
+        //    var coursesFacade = new CoursesFacade();
+
+        //    mockRepository.Setup(repo => repo.Add)
+        //        .Returns()
+        //        .Verifiable();
+
+        //    var coursesController = new CoursesController(mockRepository.Object, coursesFacade);
+
+        //    Course new_course = new Course
+        //    {
+        //        Name = "Paradigmas",
+        //        Description = "Aprenda várias linguagens diferentes",
+        //        TotalHours = 44
+        //    };
+
+        //    // Act
+        //    var result = await coursesController.Create(new_course);
+
+        //    // Assert
+        //    mockRepository.Verify();
+        //}
     }
 }

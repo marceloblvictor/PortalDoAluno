@@ -34,7 +34,7 @@ namespace PortalDoAluno.Repository
         /// </summary>
         /// <param name="course">Uma instância da entidade Course</param>
         /// <returns>Retorna um boolean indicando se a operação foi bem sucedida </returns>
-        public bool Add(Course course);
+        public Task<bool> Add(Course course);
 
         /// <summary>
         /// Edita o registro da entidade Course cujo ID é passado como parâmetro
@@ -42,13 +42,13 @@ namespace PortalDoAluno.Repository
         /// <param name="course">A instância da entidade Course que substiturá o registro da entidade Course</param>
         /// <param name="courseID">ID do registro da entidade Course que será editado</param>
         /// <returns>Retorna um boolean indicando se a operação foi bem sucedida </returns>
-        public bool Update(Course course, int courseID);
+        public Task<bool> Update(Course course, int courseID);
 
         /// <summary>
         /// Exclui o registro da entidade Course cujo ID é passado como parâmetro
         /// </summary>
         /// <param name="courseID">ID do registro da entidade Course a ser excluído</param>
-        public void Delete(int courseID);
+        public Task<bool> Delete(int courseID);
 
         /// <summary>
         /// Conta a quantidade de registros da entidade Course

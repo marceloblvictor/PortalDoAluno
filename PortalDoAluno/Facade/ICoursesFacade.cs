@@ -25,6 +25,6 @@ namespace PortalDoAluno.Facade
         /// </summary>
         /// <param name="courses">Lista de registros da entidade Course</param>
         /// <returns>Retorna a lista de registros da entidade Course passada, ordenada conforme o parâmetro passado</returns>
-        public void SortList(IEnumerable<Course> courses, string sortingOrder);
+        public IEnumerable<Course> SortList(IEnumerable<Course> courses, string sortingOrder);
     }
 }
