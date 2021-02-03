@@ -21,19 +21,58 @@ namespace PortalDoAluno.Repository
 
         public async Task<Course> GetOne(int id)
         {
-            var qryEnt = await _context.Courses.FirstOrDefaultAsync(ent => ent.ID == id);
+            Course course = null;
+            
+            try
+            {
+                course = await _context.Courses.FirstOrDefaultAsync(ent => ent.ID == id);
+            }
+            catch (DbUpdateException ex)
+            {
+                //TODO: implementar um Logger
+                Console.WriteLine(ex.Message);
+                throw;
+            }
 
-            return qryEnt;
+            return course;
         }
 
         public async Task<IEnumerable<Course>> GetAll()
         {
-            var courses = await _context.Courses.AsNoTracking().ToListAsync();
+            IEnumerable<Course> courses = null;
+
+            try
+            {
+                courses = await _context.Courses.AsNoTracking().ToListAsync();                
+            }
+            catch (DbUpdateException ex)
+            {
+                //TODO: implementar um Logger
+                Console.WriteLine(ex.Message);
+                throw;
+            }
 
             return courses;
+
         }
 
-        public async Task<int> Count() => await _context.Courses.CountAsync();
+        public async Task<int> Count()
+        {
+            int count = 0;
+
+            try
+            {
+                count = await _context.Courses.CountAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                //TODO: implementar um Logger
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+            return count;
+        }
 
         public async Task<bool> Add(Course course)
         {
@@ -51,14 +90,38 @@ namespace PortalDoAluno.Repository
                 return false;
             }
         }
-        public Task<bool> Update(Course course, int courseID)
-        {
-            throw new System.NotImplementedException();
+        public async Task<bool> Update(Course course, int courseID)
+        {            
+            try
+            {
+                _context.Update(course);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                //TODO: implementar um Logger
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+
         }
 
-        public Task<bool> Delete(int courseID)
+        public async Task<bool> Delete(int courseID)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var course = await GetOne(courseID);
+                _context.Courses.Remove(course);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                //TODO: implementar um Logger
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
     }
 }

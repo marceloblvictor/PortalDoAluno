@@ -11,8 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// TODO: acrescentar blocos try/catch nos acessos à DB!
-
 namespace PortalDoAluno.Controllers
 {
     public class CoursesController : Controller
@@ -96,53 +94,40 @@ namespace PortalDoAluno.Controllers
             return View(course);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id is null)
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id is null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
 
-        //    var course = await _context.Courses.AsNoTracking().FirstOrDefaultAsync(ent => ent.ID == id);
+            var course = await _repository.GetOne((int) id);
 
-        //    if (course is null)
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
+            if (course is null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
 
-        //    return View(course);
-        //}
+            return View(course);
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int? id,
-        //    [Bind("ID,Name,Description,TotalHours,ContentType")] Course course)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int? id,
+            [Bind("ID,Name,Description,TotalHours")] Course course)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(course);
-        //            await _context.SaveChangesAsync();
-
-        //            return RedirectToAction(nameof(Index));
-        //        }
-        //        catch (DbUpdateException /* ex */)
-        //        {
-        //            //Log the error (uncomment ex variable name and write a log.)
-        //            ModelState.AddModelError("", "Unable to save changes. " +
-        //                "Try again, and if the problem persists, " +
-        //                "see your system administrator.");
-        //        }
-        //    }
-        //    return View(course);
-        //}
+            if (ModelState.IsValid)
+            {
+                await _repository.Update(course, (int) id);
+            }
+            return RedirectToAction(nameof(Details), new { id = id });
+        }
 
         //// TODO: dividir em um action para o GET e outro para o POST!
         //public async Task<IActionResult> Delete(int? id, bool? confirmed = false)
