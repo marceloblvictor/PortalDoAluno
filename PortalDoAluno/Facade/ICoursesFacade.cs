@@ -19,5 +19,12 @@ namespace PortalDoAluno.Facade
         /// <param name="courses">Lista de registros da entidade Course</param>
         /// <returns>Lista de objetos de transferência representativos de registros da entidade Course</returns>
         public IEnumerable<CourseOT> BuildOTList(IEnumerable<Course> courses);
+
+        /// <summary>
+        /// Ordena uma lista de registros da entidade Course conforme o parâmetro passado
+        /// </summary>
+        /// <param name="courses">Lista de registros da entidade Course</param>
+        /// <returns>Retorna a lista de registros da entidade Course passada, ordenada conforme o parâmetro passado</returns>
+        public void SortList(IEnumerable<Course> courses, string sortingOrder);
     }
 }

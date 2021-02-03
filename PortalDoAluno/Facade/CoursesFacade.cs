@@ -1,6 +1,7 @@
 ﻿using PortalDoAluno.DTO;
 using PortalDoAluno.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PortalDoAluno.Facade
 {
@@ -39,6 +40,44 @@ namespace PortalDoAluno.Facade
             }
 
             return coursesOT;
+        }
+
+        /// <summary>
+        /// Ordena uma lista de registros da entidade Course conforme o parâmetro passado
+        /// </summary>
+        /// <param name="courses">Lista de registros da entidade Course</param>
+        /// <returns>Retorna a lista de registros da entidade Course passada, ordenada conforme o parâmetro passado</returns>
+        public void SortList(IEnumerable<Course> courses, string sortingOrder)
+        {
+            switch (sortingOrder)
+            {
+                case "name":
+                    goto default;
+
+                case "name_desc":
+                    courses = courses.OrderByDescending(c => c.Name);
+                    break;
+
+                case "description":
+                    courses = courses.OrderBy(c => c.Description);
+                    break;
+
+                case "description_desc":
+                    courses = courses.OrderByDescending(c => c.Description);
+                    break;
+
+                case "totalHours":
+                    courses = courses.OrderBy(c => c.TotalHours);
+                    break;
+
+                case "totalHours_desc":
+                    courses = courses.OrderByDescending(c => c.TotalHours);
+                    break;
+
+                default:
+                    courses = courses.OrderBy(c => c.Name);
+                    break;
+            }
         }
     }
 }

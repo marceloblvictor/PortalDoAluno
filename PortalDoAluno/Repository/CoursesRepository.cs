@@ -3,6 +3,7 @@ using PortalDoAluno.Data;
 using PortalDoAluno.DTO;
 using PortalDoAluno.Facade;
 using PortalDoAluno.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,6 @@ namespace PortalDoAluno.Repository
         public CoursesRepository(PortalDoAlunoDbContext context)
         {
             _context = context;
-            
         }
 
         public async Task<Course> GetOne(int id)
@@ -35,7 +35,29 @@ namespace PortalDoAluno.Repository
 
         public async Task<int> Count() => await _context.Courses.CountAsync();
 
+        public async Task<bool> Add(Course course)
+        {
+            try
+            {
+                await _context.Courses.AddAsync(course);
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                //TODO: implementar um Logger
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
 
+        public bool Update(Course course, int courseID)
+        {
+            throw new System.NotImplementedException();
+        }
 
+        public void Delete(int courseID)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

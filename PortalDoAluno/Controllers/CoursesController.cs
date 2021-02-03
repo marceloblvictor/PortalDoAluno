@@ -18,6 +18,7 @@ namespace PortalDoAluno.Controllers
     public class CoursesController : Controller
     {          
         private readonly ICoursesRepository _repository;
+
         private readonly ICoursesFacade _facade;
 
         public CoursesController(ICoursesRepository repository, ICoursesFacade facade) 
@@ -32,59 +33,26 @@ namespace PortalDoAluno.Controllers
             int itemsPerPage = 5, int pageNumber = 1)
         {
             IEnumerable<Course> courses = await _repository.GetAll();
-                       
+
+            // Filtra os registros da entidade Course conforme o texto passado pelo cliente                       
             if (!String.IsNullOrWhiteSpace(searchString))
-            {                
-                // Como a query está sendo feita num IQueryable, ela será feita no servidor e a comparação (Contains) será case insensitive (default do SQL Server)
-                // Se fosse usado o Linq to entity num IEnumberable, a comparação (Contains) é case insensitive por default
+            {                                
                 courses = courses.Where(c => c.Name.Contains(searchString));
             }
 
-            // TODO: levar isso para fora do Controller (fachada?)!
-            switch (sortingOrder)
-            {
-                case "name":
-                    goto default;                    
+            // Ordena os registros da entidade Course conforme a ordem passada pelo cliente
+             _facade.SortList(courses, sortingOrder);
 
-                case "name_desc":
-                    courses = courses.OrderByDescending(c => c.Name);
-                    break;
-
-                case "description":
-                    courses = courses.OrderBy(c => c.Description);
-                    break;
-
-                case "description_desc":
-                    courses = courses.OrderByDescending(c => c.Description);
-                    break;
-
-                case "totalHours":
-                    courses = courses.OrderBy(c => c.TotalHours);
-                    break;
-
-                case "totalHours_desc":
-                    courses = courses.OrderByDescending(c => c.TotalHours);
-                    break;
-                
-                default:
-                    courses = courses.OrderBy(c => c.Name);
-                    break;
-            }
+            // Monta uma lista com os objetos de transferência
+            var coursesOTs = _facade.BuildOTList(courses);
 
             ViewBag.searchString = searchString;
             ViewBag.sortingOrder = sortingOrder;
             ViewBag.pageNumber = pageNumber;
             ViewBag.itemsPerPage = itemsPerPage;
-            ViewBag.totalCourses = await _repository.Count();
-
+            ViewBag.totalCourses = await _repository.Count();            
             
-
-            //The code creates an IQueryable variable before the switch statement, modifies it in the switch statement, 
-            //and calls the ToListAsync method after the switch statement.When you create and modify IQueryable variables, 
-            //no query is sent to the database. The query isn't executed until you convert the IQueryable object into a 
-            //collection by calling a method such as ToListAsync. Therefore, this code results in a single query that's not 
-            //executed until the return View statement.
-            return View(Pagination<CourseOT>.Create(_facade.BuildOTList(courses), ViewBag.totalCourses, itemsPerPage, pageNumber));            
+            return View(Pagination<CourseOT>.Create(coursesOTs, ViewBag.totalCourses, itemsPerPage, pageNumber));            
         }
 
         // GET: /Courses/Details/{id}
