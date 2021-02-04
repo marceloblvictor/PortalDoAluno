@@ -149,26 +149,6 @@ namespace PortalDoAluno.Controllers
             await _repository.Delete(id);
 
             return RedirectToAction(nameof(Index));
-        }
-        //// TODO: dividir em um action para o GET e outro para o POST!
-        //public async Task<IActionResult> Delete(int? id, bool? confirmed = false)
-        //{
-        //    if (id is null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var courseToBeDeleted = await _context.Courses.FirstOrDefaultAsync(ent => ent.ID == id);
-
-        //    if (confirmed == true)
-        //    {                
-        //        _context.Courses.Remove(courseToBeDeleted);
-        //        await _context.SaveChangesAsync();
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-
-        //    return View(courseToBeDeleted);
-        //}
+        }        
     }
 }

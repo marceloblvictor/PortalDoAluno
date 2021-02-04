@@ -14,7 +14,7 @@ namespace PortalDoAluno.Tests
 {
     public class CoursesControllerTest
     {
-        public IEnumerable<Course> GenerateFakeCourses()
+        public IEnumerable<Course> GenerateFakeCoursesList()
         {
             Course[] courses =
             {
@@ -26,13 +26,18 @@ namespace PortalDoAluno.Tests
             return new List<Course>(courses);
         }
 
+        public Course GenerateFakeCourse()
+        {
+            return new Course { Name = "Intro to Testando", Description = "Aprenda de Heidegger a Sartre", TotalHours = 44 };
+        }
+
         [Fact]
         public async void Index_ListCourses_PaginationIsTheModel()
         {
             // Arrange
             var falseRepository = new Mock<ICoursesRepository>();
             var coursesFacade = new CoursesFacade();
-            falseRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GenerateFakeCourses());
+            falseRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GenerateFakeCoursesList());
             var coursesController = new CoursesController(falseRepository.Object, coursesFacade);
 
             // Act
@@ -49,7 +54,7 @@ namespace PortalDoAluno.Tests
             // Arrange
             var falseRepository = new Mock<ICoursesRepository>();
             var coursesFacade = new CoursesFacade();
-            falseRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GenerateFakeCourses());
+            falseRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GenerateFakeCoursesList());
             var coursesController = new CoursesController(falseRepository.Object, coursesFacade);
 
             // Act
@@ -62,12 +67,12 @@ namespace PortalDoAluno.Tests
         }
 
         [Fact]
-        public async void Create_NewCoursePost_Redirects()
+        public async void CreatePost_NewCoursePost_Redirects()
         {
             // Arrange
             var falseRepository = new Mock<ICoursesRepository>();
             var coursesFacade = new CoursesFacade();
-            falseRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GenerateFakeCourses());
+            falseRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GenerateFakeCoursesList());
             var coursesController = new CoursesController(falseRepository.Object, coursesFacade);
 
             Course new_course = new Course
@@ -84,31 +89,29 @@ namespace PortalDoAluno.Tests
             Assert.IsType<RedirectToActionResult>(result);            
         }
 
-        //[Fact]
-        //public async void Create_NewCoursePost_AddsNewCourseEntity()
-        //{
-        //    // Arrange
-        //    var mockRepository = new Mock<ICoursesRepository>();
-        //    var coursesFacade = new CoursesFacade();
+        [Fact]
+        public async void Create_NewCoursePost_AddsNewCourseEntity()
+        {
+            // Arrange
+            var mockRepository = new Mock<ICoursesRepository>();
+            var coursesFacade = new CoursesFacade();
+            Course course = new Course
+            {
+                Name = "Paradigmas",
+                Description = "Aprenda várias linguagens diferentes",
+                TotalHours = 44
+            };
 
-        //    mockRepository.Setup(repo => repo.Add)
-        //        .Returns()
-        //        .Verifiable();
+            mockRepository.Setup(repo => repo.Add(It.IsAny<Course>())).Returns(Task.FromResult(true))
+                .Verifiable();
 
-        //    var coursesController = new CoursesController(mockRepository.Object, coursesFacade);
+            var coursesController = new CoursesController(mockRepository.Object, coursesFacade);
 
-        //    Course new_course = new Course
-        //    {
-        //        Name = "Paradigmas",
-        //        Description = "Aprenda várias linguagens diferentes",
-        //        TotalHours = 44
-        //    };
+            // Act
+            var result = await coursesController.Create(course);
 
-        //    // Act
-        //    var result = await coursesController.Create(new_course);
-
-        //    // Assert
-        //    mockRepository.Verify();
-        //}
+            // Assert
+            mockRepository.Verify();
+        }
     }
 }
