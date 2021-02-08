@@ -119,7 +119,7 @@ namespace PortalDoAluno.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return BadRequest(ModelState);
             }
 
             if (ModelState.IsValid)
@@ -134,7 +134,7 @@ namespace PortalDoAluno.Controllers
         {
             if (id is null)
             {
-                return NotFound();
+                return BadRequest(ModelState);
             }
 
             var course = await _repository.GetOne((int) id);
@@ -144,9 +144,14 @@ namespace PortalDoAluno.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            await _repository.Delete(id);
+            if (id is null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _repository.Delete((int) id);
 
             return RedirectToAction(nameof(Index));
         }        

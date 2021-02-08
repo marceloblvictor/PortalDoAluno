@@ -117,5 +117,39 @@ namespace PortalDoAluno.Tests
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.Equal("Create", viewResult.ViewName);
         }
+
+        [Fact]
+        public async void Delete_PassedIDIsNull_ReturnsBadRequestObject()
+        {
+            // Arrange
+            var falseRepository = new Mock<ICoursesRepository>();
+            var coursesFacade = new CoursesFacade();
+            falseRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GenerateFakeCoursesList());
+            var coursesController = new CoursesController(falseRepository.Object, coursesFacade);
+
+            // Act
+            var result = await coursesController.Delete(null);
+
+            // Assert
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<SerializableError>(badRequestResult.Value);
+        }
+
+        [Fact]
+        public async void DeleteConfirmed_PassedIDIsNull_ReturnsBadRequestObject()
+        {
+            // Arrange
+            var falseRepository = new Mock<ICoursesRepository>();
+            var coursesFacade = new CoursesFacade();
+            falseRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GenerateFakeCoursesList());
+            var coursesController = new CoursesController(falseRepository.Object, coursesFacade);
+
+            // Act
+            var result = await coursesController.DeleteConfirmed(null);
+
+            // Assert
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<SerializableError>(badRequestResult.Value);
+        }
     }
 }
