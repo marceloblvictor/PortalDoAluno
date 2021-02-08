@@ -5,6 +5,7 @@ using PortalDoAluno.DTO;
 using PortalDoAluno.Facade;
 using PortalDoAluno.Models;
 using PortalDoAluno.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,19 +17,19 @@ namespace PortalDoAluno.Tests
     {
         public IEnumerable<Course> GenerateFakeCoursesList()
         {
-            Course[] courses =
+            return new List<Course>() 
             {
                 new Course { Name = "Intro to Testando", Description = "Aprenda de Heidegger a Sartre", TotalHours = 44 },
                 new Course { Name = "History of Urbanism", Description = "Aprenda os estilos arquitetônicos", TotalHours = 36 },
                 new Course { Name = "Linear Algebra", Description = "Aprenda Matrizes e Vetores", TotalHours = 68 }
             };
-
-            return new List<Course>(courses);
         }
 
         public Course GenerateFakeCourse()
         {
-            return new Course { Name = "Intro to Testando", Description = "Aprenda de Heidegger a Sartre", TotalHours = 44 };
+            return new Course { Name = "ABC", 
+                                Description = "Aprenda as letras",
+                                TotalHours = 86 };
         }
 
         [Fact]
@@ -67,23 +68,15 @@ namespace PortalDoAluno.Tests
         }
 
         [Fact]
-        public async void CreatePost_NewCoursePost_Redirects()
+        public async void CreatePost_NewCoursePostValid_Redirects()
         {
             // Arrange
             var falseRepository = new Mock<ICoursesRepository>();
             var coursesFacade = new CoursesFacade();
-            falseRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GenerateFakeCoursesList());
-            var coursesController = new CoursesController(falseRepository.Object, coursesFacade);
-
-            Course new_course = new Course
-            {
-                Name = "Paradigmas",
-                Description = "Aprenda várias linguagens diferentes",
-                TotalHours = 44
-            };
+            var coursesController = new CoursesController(falseRepository.Object, coursesFacade);            
 
             // Act
-            var result = await coursesController.Create(new_course);
+            var result = await coursesController.Create(GenerateFakeCourse());
 
             // Assert
             Assert.IsType<RedirectToActionResult>(result);            
@@ -95,23 +88,34 @@ namespace PortalDoAluno.Tests
             // Arrange
             var mockRepository = new Mock<ICoursesRepository>();
             var coursesFacade = new CoursesFacade();
-            Course course = new Course
-            {
-                Name = "Paradigmas",
-                Description = "Aprenda várias linguagens diferentes",
-                TotalHours = 44
-            };
-
             mockRepository.Setup(repo => repo.Add(It.IsAny<Course>())).Returns(Task.FromResult(true))
                 .Verifiable();
 
             var coursesController = new CoursesController(mockRepository.Object, coursesFacade);
 
             // Act
-            var result = await coursesController.Create(course);
+            var result = await coursesController.Create(GenerateFakeCourse());
 
             // Assert
             mockRepository.Verify();
+        }
+
+        [Fact]
+        public async void CreatePost_NewCoursePostInvalid_ReloadsSamePage()
+        {
+            // Arrange
+            var falseRepository = new Mock<ICoursesRepository>();
+            var coursesFacade = new CoursesFacade();
+            falseRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GenerateFakeCoursesList());
+            var coursesController = new CoursesController(falseRepository.Object, coursesFacade);
+            coursesController.ModelState.AddModelError("erro", "erro no teste");
+
+            // Act
+            var result = await coursesController.Create(GenerateFakeCourse());
+
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            Assert.Equal("Create", viewResult.ViewName);
         }
     }
 }

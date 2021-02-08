@@ -7,7 +7,7 @@
 *.cache
 *.suo
 *.pdb
-
+*.testlog
 
 # User-specific files
 *.rsuser

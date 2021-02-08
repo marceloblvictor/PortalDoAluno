@@ -27,7 +27,7 @@ namespace PortalDoAluno.Controllers
 
         // GET: /Courses/
         [HttpGet]
-        public async Task<IActionResult> Index(string searchString="", string sortingOrder="", 
+        public async Task<IActionResult> Index(string searchString = "", string sortingOrder = "", 
             int itemsPerPage = 5, int pageNumber = 1)
         {
             IEnumerable<Course> courses = await _repository.GetAll();
@@ -51,7 +51,7 @@ namespace PortalDoAluno.Controllers
             ViewBag.itemsPerPage = itemsPerPage;
             ViewBag.totalCourses = await _repository.Count();            
             
-            return View(Pagination<CourseOT>.Create(coursesOTs, ViewBag.totalCourses, itemsPerPage, pageNumber));            
+            return View(nameof(Index), Pagination<CourseOT>.Create(coursesOTs, ViewBag.totalCourses, itemsPerPage, pageNumber));            
         }
 
         // GET: /Courses/Details/{id}
@@ -70,14 +70,14 @@ namespace PortalDoAluno.Controllers
                 return RedirectToAction(nameof(Index));
             }            
 
-            return View(course);
+            return View(nameof(Details), course);
         }
 
         // GET: /Courses/Create/
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View(nameof(Create));
         }
 
         [HttpPost]
@@ -91,7 +91,7 @@ namespace PortalDoAluno.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(course);
+            return View(nameof(Create), course);
         }
 
         [HttpGet]
@@ -109,7 +109,7 @@ namespace PortalDoAluno.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(course);
+            return View(nameof(Edit), course);
         }
 
         [HttpPost]
@@ -139,7 +139,7 @@ namespace PortalDoAluno.Controllers
 
             var course = await _repository.GetOne((int) id);
 
-            return View(course);
+            return View(nameof(Delete), course);
         }
 
         [HttpPost, ActionName("Delete")]
