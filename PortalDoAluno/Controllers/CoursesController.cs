@@ -63,7 +63,7 @@ namespace PortalDoAluno.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var course = await _repository.GetOne((int) id);
+            var course = await _repository.GetOne((int) id, getStudents: true);
 
             if(course is null)
             {
@@ -102,7 +102,7 @@ namespace PortalDoAluno.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var course = await _repository.GetOne((int) id);
+            var course = await _repository.GetOne((int) id, getStudents: false);
 
             if (course is null)
             {
@@ -137,7 +137,7 @@ namespace PortalDoAluno.Controllers
                 return BadRequest(ModelState);
             }
 
-            var course = await _repository.GetOne((int) id);
+            var course = await _repository.GetOne((int) id, getStudents: false);
 
             return View(nameof(Delete), course);
         }

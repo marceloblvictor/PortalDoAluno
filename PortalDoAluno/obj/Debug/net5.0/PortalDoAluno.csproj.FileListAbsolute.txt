@@ -152,7 +152,6 @@ C:\Users\marce\Source\Repos\marceloblvictor\PortalDoAluno\obj\Debug\net5.0\Razor
 C:\Users\marce\Source\Repos\marceloblvictor\PortalDoAluno\obj\Debug\net5.0\Razor\Views\Courses\Index.cshtml.g.cs
 C:\Users\marce\Source\Repos\marceloblvictor\PortalDoAluno\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\marce\Source\Repos\marceloblvictor\PortalDoAluno\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
-C:\Users\marce\Source\Repos\marceloblvictor\PortalDoAluno\obj\Debug\net5.0\Razor\Views\Students\Details.cshtml.g.cs
 C:\Users\marce\Source\Repos\marceloblvictor\PortalDoAluno\obj\Debug\net5.0\Razor\Views\Students\Index.cshtml.g.cs
 C:\Users\marce\Source\Repos\marceloblvictor\PortalDoAluno\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Users\marce\Source\Repos\marceloblvictor\PortalDoAluno\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs

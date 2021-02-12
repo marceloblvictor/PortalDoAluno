@@ -21,7 +21,7 @@ namespace PortalDoAluno.Repository
         /// </summary>
         /// <param name="id">ID do registro da entidade Course buscado</param>
         /// <returns>Retorna o registro da entidade Course conforme o ID passado por parâmetro</returns>
-        public Task<Course> GetOne(int id);
+        public Task<Course> GetOne(int id, bool getStudents);
 
         /// <summary>
         /// Obtém todos os registros da entidade Course

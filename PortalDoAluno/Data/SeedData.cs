@@ -27,12 +27,9 @@ namespace PortalDoAluno.Data
 
             var students = new Student[]
             {
-                new Student {Username="teobaldo123silva", Password="abcd1234", Email="teobaldo123@gmail.com", 
-                RegistrationDate=DateTime.Now, Name="Teobaldo"},
-                new Student {Username="rasputin420", Password="abcd1234", Email="rasputinputin@gmail.com",
-                RegistrationDate=DateTime.Now, Name="Francisco Rasputin"},
-                new Student {Username="marily_manson", Password="abcd1234", Email="marimanlinson@gmail.com",
-                RegistrationDate=DateTime.Now, Name="Marilyn Manson"}
+                new Student {Name="Teobaldo", CourseID=2},
+                new Student {Name="Francisco Rasputin", CourseID=2},
+                new Student {Name="Marilyn Manson", CourseID=2}
             };
 
             context.Students.AddRange(students);
@@ -64,12 +61,9 @@ namespace PortalDoAluno.Data
 
             var professors = new Professor[]
             {
-                new Professor {Username="testevaldo_123", Password="abcd1234", Email="testevaldo_420@gmail.com",
-                RegistrationDate=DateTime.Now, Name="Testevaldo", DepartmentID=1},
-                new Professor {Username="JohnLew1s", Password="abcd1234", Email="johnlewis@gmail.com",
-                RegistrationDate=DateTime.Now, Name="John Lewis", DepartmentID=2},
-                new Professor {Username="Abrah4mL1nc01n", Password="abcd1234", Email="abraham_lincoln@gmail.com",
-                RegistrationDate=DateTime.Now, Name="Abraham Lincoln", DepartmentID=3},
+                new Professor {DepartmentID=1},
+                new Professor {DepartmentID=2},
+                new Professor {DepartmentID=3},
             };
 
             context.Professors.AddRange(professors);

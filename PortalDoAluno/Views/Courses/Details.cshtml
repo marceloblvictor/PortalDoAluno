@@ -42,3 +42,30 @@
     <a class="nav-link d-inline ms-3 btn btn-danger" asp-controller="Courses" asp-action="Delete" asp-route-id="@Model.ID">Deletar</a>
 </div>
 
+<hr />
+
+<h2 class="mt-4">Alunos:</h2>
+<table class="table table-striped my-table mx-auto my-5">
+    <thead>
+        <tr class="table-success">
+            <th scope="col">Matrícula</th>
+            <th scope="col">
+                Nome
+            </th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var student in Model.Students)
+            {
+                <tr>
+                    <th scope="row">@student.ID</th>
+                    <td>@student.Name</td>                    
+                    <td><a asp-controller="Students" asp-action="Details" asp-route-id="@student.ID" class="btn btn-success">Ver Detalhes</a></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

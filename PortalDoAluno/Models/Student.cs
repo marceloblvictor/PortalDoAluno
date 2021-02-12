@@ -5,11 +5,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PortalDoAluno.Models
 {
-    sealed public class Student : User
+    sealed public class Student 
     {
         #region Properties
 
-        public List<Enrollment> Enrollments;
+        [Key]
+        public int ID { get; set; }
+
+        public string Name { get; set; }
+
+        public IEnumerable<Enrollment> Enrollments;
+
+        public int CourseID { get; set; }
 
         #endregion
     }

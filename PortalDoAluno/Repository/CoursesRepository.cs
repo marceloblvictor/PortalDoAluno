@@ -19,13 +19,21 @@ namespace PortalDoAluno.Repository
             _context = context;
         }
 
-        public async Task<Course> GetOne(int id)
+        public async Task<Course> GetOne(int id, bool getStudents = false)
         {
             Course course = null;
             
             try
             {
-                course = await _context.Courses.FirstOrDefaultAsync(ent => ent.ID == id);
+                if (getStudents == false)
+                {
+                    course = await _context.Courses.FirstOrDefaultAsync(ent => ent.ID == id);
+                }
+                else
+                {
+                    course = await _context.Courses.Include(nameof(Course.Students)).FirstOrDefaultAsync(ent => ent.ID == id);
+                }
+                
             }
             catch (DbUpdateException ex)
             {
@@ -53,7 +61,6 @@ namespace PortalDoAluno.Repository
             }
 
             return courses;
-
         }
 
         public async Task<int> Count()
