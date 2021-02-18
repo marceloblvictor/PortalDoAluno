@@ -25,6 +25,8 @@ namespace PortalDoAluno
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddAuthenticationCore();
             
             services.AddScoped<ICoursesRepository, CoursesRepository>();
             
@@ -53,6 +55,8 @@ namespace PortalDoAluno
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            // app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

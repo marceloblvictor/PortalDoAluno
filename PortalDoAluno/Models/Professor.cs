@@ -13,13 +13,16 @@ namespace PortalDoAluno.Models
         public int ID { get; set; }
         
         #region Navigation Properties
+
         public Department Department { get; set; }
+
         public int DepartmentID { get; set; }
 
         public List<Course> Courses { get; set; }        
 
         public User User { get; set; }
-        public int UserID { get; set; }
+
+        public int UserID { get; set; }        
 
         #endregion
 
