@@ -2,24 +2,16 @@
     ViewData["title"] = "Início";
 }
 
-@model User
 
 <div class="container-fluid p-3">
 
     <h1 class="display-2 mt-4 text-center font-weight-bold">Portal Do Aluno</h1>
-
-    <form class="container p-3 mt-5 mx-auto col-4 d-grid gap-3 border border-success rounded-2 background-info shadow p-3 mb-5 bg-white rounded" method="post">
-        <label asp-for="Username" class="control-label"></label>
-        <input asp-for="Username" class="form-control" />
-        <span asp-validation-for="Username" class="text-danger"></span>
-
-        <label asp-for="Password" class="control-label"></label>
-        <input asp-for="Password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-
-        <button type="submit" class="btn btn-success col-3 mx-auto">Entrar</button>
-
-    </form>
+    
+    <div class="container my-5 text-center d-grid gap-3">
+        <h2>Seja Bem-vindo(a)!</h2>
+        <p>Aqui você poderá checar, criar, editar e apagar cursos!</p>
+        <a asp-controller="Courses" asp-action="Index">Ver Cursos</a>
+    </div>
 
     <div class="row mt-5">
         <div class="col-md-4 mr-1">

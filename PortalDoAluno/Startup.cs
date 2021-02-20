@@ -24,9 +24,7 @@ namespace PortalDoAluno
         // Container de injeção de dependências
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-
-            services.AddAuthenticationCore();
+            services.AddControllersWithViews();            
             
             services.AddScoped<ICoursesRepository, CoursesRepository>();
             

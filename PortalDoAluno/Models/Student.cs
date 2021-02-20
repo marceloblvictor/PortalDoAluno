@@ -12,9 +12,7 @@ namespace PortalDoAluno.Models
         [Key]
         public int ID { get; set; }
 
-        public string Name { get; set; }
-
-        public IEnumerable<Enrollment> Enrollments;
+        public string Name { get; set; }        
 
         public int CourseID { get; set; }
 

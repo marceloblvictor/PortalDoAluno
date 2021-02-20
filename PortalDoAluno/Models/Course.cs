@@ -32,9 +32,7 @@ namespace PortalDoAluno.Models
 
         #region Navigation Properties
 
-        public List<Student> Students { get; set; }
-
-        public List<Professor> Professors { get; set; }
+        public List<Student> Students { get; set; }        
 
         #endregion
 

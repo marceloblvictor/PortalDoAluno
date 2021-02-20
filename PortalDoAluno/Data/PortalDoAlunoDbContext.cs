@@ -15,10 +15,7 @@ namespace PortalDoAluno.Data
         {
             // Creates entities tables with names in singular, overriding the default behavior of using the DbSet name
             modelBuilder.Entity<Course>().ToTable("Course");
-            modelBuilder.Entity<Student>().ToTable("Student");
-            modelBuilder.Entity<Department>().ToTable("Department");
-            modelBuilder.Entity<Professor>().ToTable("Professor");
-            modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
+            modelBuilder.Entity<Student>().ToTable("Student");            
 
             // Configures the relationship delete to Restrict. By convention, the Entity Framework enables cascade 
             // delete for non-nullable foreign keys and for many-to-many relationships
@@ -31,14 +28,6 @@ namespace PortalDoAluno.Data
         public DbSet<Student> Students { get; set; }
         
         public DbSet<Course> Courses { get; set; }
-
-        public DbSet<Department> Departments { get; set; }
-
-        public DbSet<Professor> Professors { get; set; }
-
-        public DbSet<Enrollment> Enrollments { get; set; }
-
-
 
     }
 }

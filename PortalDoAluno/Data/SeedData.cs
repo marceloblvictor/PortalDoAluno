@@ -29,46 +29,15 @@ namespace PortalDoAluno.Data
             {
                 new Student {Name="Teobaldo", CourseID=2},
                 new Student {Name="Francisco Rasputin", CourseID=2},
-                new Student {Name="Marilyn Manson", CourseID=2}
+                new Student {Name="Marilyn Manson", CourseID=1},
+                new Student {Name="Joao Carlos", CourseID=1},
+                new Student {Name="Vinny Caravella", CourseID=3},
+                new Student {Name="Alex Navarro", CourseID=3},
+                new Student {Name="Jeff Bakalar", CourseID=2},
             };
 
             context.Students.AddRange(students);
             context.SaveChanges();
-
-            var departments = new Department[]
-            {
-                new Department {Name="History"},
-                new Department {Name="Computer Science"},
-                new Department {Name="Philosophy"},
-            };
-
-            context.Departments.AddRange(departments);
-            context.SaveChanges();
-
-            var enrollments = new Enrollment[]
-            {
-                new Enrollment {CourseID=1, StudentID=1},
-                new Enrollment {CourseID=3, StudentID=1},
-                new Enrollment {CourseID=1, StudentID=2},
-                new Enrollment {CourseID=1, StudentID=2},
-                new Enrollment {CourseID=1, StudentID=3},
-                new Enrollment {CourseID=2, StudentID=3},
-                new Enrollment {CourseID=3, StudentID=3},
-            };
-
-            context.Enrollments.AddRange(enrollments);
-            context.SaveChanges();
-
-            var professors = new Professor[]
-            {
-                new Professor {DepartmentID=1},
-                new Professor {DepartmentID=2},
-                new Professor {DepartmentID=3},
-            };
-
-            context.Professors.AddRange(professors);
-            context.SaveChanges();
-
 
         }
     }
