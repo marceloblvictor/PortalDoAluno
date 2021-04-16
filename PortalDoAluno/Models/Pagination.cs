@@ -14,8 +14,8 @@ namespace PortalDoAluno.Models
 
         public Pagination(IEnumerable<T> items, int count, int itemsPerPage, int pageIndex)
         {                        
-            Index = pageIndex;
-            TotalPages = (int) Math.Ceiling((double) ( count / itemsPerPage));
+            Index = pageIndex;            
+            TotalPages = (int) Math.Ceiling((decimal) count / (decimal) itemsPerPage);
 
             // substitui a necessidade de criar uma propriedade IEnumerable que contenha a lista!
             this.AddRange(items);
@@ -23,7 +23,7 @@ namespace PortalDoAluno.Models
 
         public bool HasPrevious() => Index > 1;
 
-        public bool HasNext() => Index <= TotalPages;
+        public bool HasNext() => Index < TotalPages;
 
         
         public static Pagination<T> Create(IEnumerable<T> source, int count, int itemsPerPage, int pageIndex)
